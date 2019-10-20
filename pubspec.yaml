@@ -1,5 +1,5 @@
-name: navigation_drawer
-description: Navigation Drawer Implementation
+name: oline_sellerassist
+description: The app for sellers on Brazil's industry leading online marketplace
 
 dependencies:
   flutter:

@@ -1,6 +1,6 @@
-# Navigation Drawer
+# Oline SellerAssist App
 
-Example app showing implementing navigation Drawer.
+The app for sellers on Oline, Brazil's industry leading online marketplace.
 
 <img src="demo_img.gif" height="600em" />
 

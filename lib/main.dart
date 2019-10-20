@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:navigation_drawer/screens/account.dart';
-import 'package:navigation_drawer/screens/home.dart';
-import 'package:navigation_drawer/screens/settings.dart';
+import 'package:oline_sellerassist/screens/account.dart';
+import 'package:oline_sellerassist/screens/home.dart';
+import 'package:oline_sellerassist/screens/settings.dart';
 
 void main() {
   runApp(MaterialApp(

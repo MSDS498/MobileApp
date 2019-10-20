@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:navigation_drawer/screens/account.dart';
-import 'package:navigation_drawer/screens/settings.dart';
+import 'package:oline_sellerassist/screens/account.dart';
+import 'package:oline_sellerassist/screens/settings.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,9 +13,9 @@ class HomeScreenState extends State<HomeScreen> {
     var headerChild = DrawerHeader(child: Text("Header"));
     var aboutChild = AboutListTile(
         child: Text("About"),
-        applicationName: "Application Name",
-        applicationVersion: "v1.0.0",
-        applicationIcon: Icon(Icons.adb),
+        applicationName: "Oline SellerAssist",
+        applicationVersion: "v1.0.1",
+        applicationIcon: Icon(Icons.attach_money),
         icon: Icon(Icons.info));
 
     ListTile getNavItem(var icon, String s, String routeName) {
@@ -35,9 +35,9 @@ class HomeScreenState extends State<HomeScreen> {
 
     var myNavChildren = [
       headerChild,
-      getNavItem(Icons.settings, "Settings", SettingsScreen.routeName),
       getNavItem(Icons.home, "Home", "/"),
       getNavItem(Icons.account_box, "Account", AccountScreen.routeName),
+      getNavItem(Icons.settings, "Settings", SettingsScreen.routeName),
       aboutChild
     ];
 
@@ -52,30 +52,54 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Navigation Drawer Example"),
+        title: Text("Oline Seller Assist"),
       ),
-      body: Container(
-                child:
+      body: Column(
+                children: <Widget>[
                     Center(
                           child: RaisedButton(
-                                      onPressed: _launchURL,
-                                      child: Text('Show our first viz'),
+                                      onPressed: _viewSalesByCategory,
+                                      child: Text('See sales by category'),
+                                              )
                           ),
-                    ),
-      ),
+                  Center(
+                    child: RaisedButton(
+                      onPressed: _viewSalesByState,
+                      child: Text('See sales by state'),
+                                        ),
+                        )
+                                ]
+                 ),
       // Set the nav drawer
       drawer: getNavDrawer(context),
     );
   }
-        //      https://public.tableau.com/views/SP500FemaleCEOs/Dashboard1?:embed=t&:display_count=no&:origin=viz_share_link
-        //      https://public.tableau.com/profile/ashley.wenger#!/vizhome/Book1_15714643502560/Dashboard1
-  _launchURL() async {
+
+  // not sure why but these methods invoked by the OnPressed action have to have no params and no return value (void)
+  // hence, it seems like we're making a bunch of repetitious code to do similar things
+  _viewSalesByCategory() async {
+    const url = 'https://public.tableau.com/profile/ashley.wenger#!/vizhome/Book2_15714679047420/Sheet2';
+    if (await canLaunch(url)) {
+       await launch(url);
+              //forceWebView didn't work for tableau public dashboard; did for other urls (presumably mobile optimized?)    await launch(url, forceWebView: true);
+    } else {
+          throw 'Could not launch $url';
+    }
+  }
+
+
+  _viewSalesByState() async {
+    //TODO:  point this to the correct URL
     const url = 'https://public.tableau.com/profile/ashley.wenger#!/vizhome/Book2_15714679047420/Sheet2';
     if (await canLaunch(url)) {
       await launch(url);
-      //await launch(url, forceWebView: true);
+      //forceWebView didn't work for tableau public dashboard; did for other urls (presumably mobile optimized?)    await launch(url, forceWebView: true);
     } else {
       throw 'Could not launch $url';
     }
   }
+
 }
+
+//      https://public.tableau.com/views/SP500FemaleCEOs/Dashboard1?:embed=t&:display_count=no&:origin=viz_share_link
+//      https://public.tableau.com/profile/ashley.wenger#!/vizhome/Book1_15714643502560/Dashboard1
