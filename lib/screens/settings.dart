@@ -9,10 +9,25 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Settings"),
       ),
-      body: Container(
-          child: Center(
-            child: Text("Settings for Oline SellerAssist"),
-          )),
+      body: Column(
+          children: <Widget>[
+            Center(
+                child: Text("Setting1"),
+                ),
+            Center(
+                child: Text("Setting2"),
+            ),
+            Center(
+                child: Text("Setting3"),
+            ),
+          ]
+      ),
+//
+//
+//      body: Container(
+//          child: Center(
+//            child: Text("Settings for Olist SellerAssist"),
+//          )),
     );
   }
 }
