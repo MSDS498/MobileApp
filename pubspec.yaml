@@ -12,6 +12,7 @@ dependencies:
   # For the URL launcher
   url_launcher:
 
+  provider: ^3.0.0
 
 dev_dependencies:
   flutter_test:

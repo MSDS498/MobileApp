@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:olist_sellerassist/screens/account.dart';
 import 'package:olist_sellerassist/screens/settings.dart';
-import 'package:olist_sellerassist/screens/run_javascript.dart';
 import 'package:olist_sellerassist/screens/sign_out_screen.dart';
-//import 'package:olist_sellerassist/screens/sign_in_screen.dart';
+import 'package:olist_sellerassist/screens/financials_home.dart';
+import 'package:olist_sellerassist/screens/CSatHomeScreen.dart';
+import 'package:olist_sellerassist/screens/delivery_home.dart';
+
 
 
 class HomeScreen extends StatefulWidget {
@@ -21,16 +22,19 @@ class HomeScreenState extends State<HomeScreen> {
 
   HomeScreenState(this.sellerID);
 
+
+
+  // functions to construct the navigation drawer
   Drawer getNavDrawer(BuildContext context) {
-    var headerChild = DrawerHeader(child: Text("Main Menu"));
-    var aboutChild = AboutListTile(
+    var headerTileForNavDrawer = DrawerHeader(child: Text("Main Menu"));
+    var aboutTileForNavDrawer = AboutListTile(
         child: Text("About"),
         applicationName: "Olist SellerAssist",
         applicationVersion: "v1.0.1",
         applicationIcon: Icon(Icons.attach_money),
         icon: Icon(Icons.info));
 
-    ListTile getNavItem(var icon, String s, String routeName) {
+    ListTile getListTileForNavDrawer(var icon, String s, String routeName) {
       return ListTile(
         leading: Icon(icon),
         title: Text(s),
@@ -50,167 +54,50 @@ class HomeScreenState extends State<HomeScreen> {
       );
     }
 
-    var myNavChildren = [
-      headerChild,
-      getNavItem(Icons.home, "Home", 'HomeScreen(this.sellerID)'),
-      getNavItem(Icons.account_box, "Account", AccountScreen.routeName),
-      getNavItem(Icons.settings, "Settings", SettingsScreen.routeName),
-      getNavItem(Icons.exit_to_app, "Log off", SignOutScreen.routeName),
-      aboutChild
+    var listTilesForDrawer = [
+      headerTileForNavDrawer,
+      getListTileForNavDrawer(Icons.home, "Home", "Home"),
+      getListTileForNavDrawer(Icons.account_box, "Account", AccountScreen.routeName),
+      getListTileForNavDrawer(Icons.settings, "Settings", SettingsScreen.routeName),
+      getListTileForNavDrawer(Icons.exit_to_app, "Log off", SignOutScreen.routeName),
+      aboutTileForNavDrawer
     ];
 
-    ListView listView = ListView(children: myNavChildren);
+    ListView listViewForDrawer = ListView(children: listTilesForDrawer);
 
     return Drawer(
-      child: listView,
+      child: listViewForDrawer,
     );
+    // end of functions to construct the nav drawer
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Olist Seller Assist"),
-      ),
-      body: Column(
-          children: <Widget>[
-            Center(
-                child: RaisedButton(
-                  onPressed: _viewSalesByCategory,
-                  child: Text('See sales by category'),
-                )
-            ),
-            Center(
-              child: RaisedButton(
-                onPressed: _viewSalesByState,
-                child: Text('See diamonds app'),
-              ),
-            ),
-            Center(
-              child: RaisedButton(
-                onPressed: _viewSalesByState2,
-                child: Text('See fake news app'),
-              ),
-            ),
-            Center(
-              child: RaisedButton(
-                onPressed: _viewDeliveryTreemap,
-                child: Text('Delivery Treemap'),
-              ),
-            ),
-            Center(
-              child: RaisedButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) =>
-                          RunJSInWebView(
-                              "https://public.tableau.com/views/Olist_Delivery/DeliveryTreemap?SellerID_param=",
-                              "Delivery by customer state", this.sellerID),
-                      )
-                  );
-                },
-                child: Text('Delivery Treemap in Webview'),
-              ),
-            ),
-            Center(
-              child: RaisedButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) =>
-                          RunJSInWebView(
-                              "https://public.tableau.com/views/Olist_Delivery/PctLate_ToCust?SellerID_param=",
-                              "% Late Delivery to Customer", this.sellerID),
-                      )
-                  );
-                },
-                child: Text('% of Orders Late to Customer'),
-              ),
-            )
-          ]
-      ),
+      appBar: AppBar( title: Text("Olist Seller Assist"), ),
+      body: Column( mainAxisAlignment: MainAxisAlignment.center,
+                    children: <ListView>[ ListView( shrinkWrap: true,
+                                          children: <ListTile>[
+                                              ListTile(leading: Icon(Icons.attach_money), title: Text('Financials'), subtitle: Text('Review sales and rev by wk, qtr, ...'), isThreeLine: true, onTap: _openFinancialsHomeScreen, ),
+                                              ListTile(leading: Icon(Icons.sentiment_satisfied), title: Text('Customer Satisfaction'), subtitle: Text('Check reviews, sentiment analysis, ...'), isThreeLine: true, onTap: _openCSatHomeScreen, ),
+                                              ListTile(leading: Icon(Icons.local_shipping), title: Text('Delivery'), subtitle: Text('Check delivery status, recent performance'), isThreeLine: true, onTap: _openDeliveryHomeScreen, ),
+                                                              ]
+                                                  ),
+                                        ],
+                  ),
       // Set the nav drawer
       drawer: getNavDrawer(context),
     );
   }
 
+  _openFinancialsHomeScreen() {  Navigator.push(context, MaterialPageRoute(builder: (context) => FinancialsHomeScreen(this.sellerID))); }
+  _openCSatHomeScreen() {  Navigator.push(context, MaterialPageRoute(builder: (context) => CSatHomeScreen(this.sellerID))); }
+  _openDeliveryHomeScreen() {  Navigator.push(context, MaterialPageRoute(builder: (context) => DeliveryHomeScreen(this.sellerID))); }
 
-
-  // not sure why but these methods invoked by the OnPressed action have to have no params and no return value (void)
-  // hence, it seems like we're making a bunch of repetitious code to do similar things
-  _viewSalesByCategory() async {
-    const url = 'https://public.tableau.com/profile/ashley.wenger#!/vizhome/Book2_15714679047420/Sheet2';
-    if (await canLaunch(url)) {
-      await launch(url);
-      //forceWebView didn't work for tableau public dashboard; did for other urls (presumably mobile optimized?)    await launch(url, forceWebView: true);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
-
-  _viewSalesByState() async {
-    const url = 'https://olistsellersassist.shinyapps.io/demo1/';
-    if (await canLaunch(url)) {
-      await launch(url);
-      //forceWebView didn't work for tableau public dashboard; did for other urls (presumably mobile optimized?)    await launch(url, forceWebView: true);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
-
-  _viewSalesByState2() async {
-    const url = 'https://olistsellersassist.shinyapps.io/fake_news_app/';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
-  _viewDeliveryTreemap() async {
-    const url = 'https://public.tableau.com/views/Olist_Delivery/DeliveryTreemap?:embed=y&:display_count=no&:toolbar=no&:showVizHome=no&:subscriptions=no&:showAppBanner=false&:showShareOptions=false&:toolbar=no';
-
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
-}
 
 
 
-//    // code to get the sellerID back
-//    void _awaitReturnValueFromSignInScreen(BuildContext context) async {
-//
-//        // start the SignInScreen and wait for it to finish with a result
-//        final result = await Navigator.push(
-//        context,
-//        MaterialPageRoute(
-//        builder: (context) => SignInScreen(),
-//        ));
-//
-//        // after the SecondScreen result comes back update the Text widget with it
-//        setState(() {
-//        this.sellerID = result;
-//        });
-//    }
-
-
-
-//      https://public.tableau.com/views/SP500FemaleCEOs/Dashboard1?:embed=t&:display_count=no&:origin=viz_share_link
-//      https://public.tableau.com/profile/ashley.wenger#!/vizhome/Book1_15714643502560/Dashboard1
-
-
-//'/Delivery_Treemap': (BuildContext context) => RunJSInWebView("https://public.tableau.com/views/Olist_Delivery/DeliveryTreemap?SellerID_param=9?:embed=y&:display_count=no&:toolbar=no&:showVizHome=no&:subscriptions=no&:showAppBanner=false&:showShareOptions=false&:toolbar=no&:refresh=yes", 'Delivery by customer state'),
-//'/Pct_Late_ToCust': (BuildContext context) => RunJSInWebView("https://public.tableau.com/views/Olist_Delivery/PctLate_ToCust?SellerID_param=8?:embed=y&:display_count=no&:toolbar=no&:showVizHome=no&:subscriptions=no&:showAppBanner=false&:showShareOptions=false&:toolbar=no&:refresh=yes", '% Late Delivery to Customer'),
-
-//  '/Delivery_Treemap': (BuildContext context) => RunJSInWebView("https://public.tableau.com/views/Olist_Delivery/DeliveryTreemap?SellerID_param=", 'Delivery by customer state', 1),
-//  '/Pct_Late_ToCust': (BuildContext context) => RunJSInWebView("https://public.tableau.com/views/Olist_Delivery/PctLate_ToCust?SellerID_param=", '% Late Delivery to Customer', 1),
-
-
-// &:mobile=y&:device=phone&:subscriptions=no&:showAppBanner=false&:showShareOptions=false&:toolbar=no
-//&:tooltip=n
-//&:showAppBanner=n   instead of false?
+}

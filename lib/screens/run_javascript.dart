@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
-class RunJSInWebView extends StatefulWidget {
+class WebViewScreen extends StatefulWidget {
   static const String routeName = "/run_javascript";
   final String strURLToLoad;
   final String webvwTitle;
   final int sellerID;
 
-  static const String url_addons = "?:embed=y&:display_count=no&:toolbar=no&:showVizHome=no&:subscriptions=no&:showAppBanner=false&:showShareOptions=false&:toolbar=no&:refresh=yes";
+  static const String url_addons = "?:embed=y&:display_count=no&:toolbar=no&:showVizHome=no&:subscriptions=no&:showAppBanner=false&:showShareOptions=false&:refresh=yes";
 
-  RunJSInWebView(this.strURLToLoad, this.webvwTitle, this.sellerID);
+  WebViewScreen(this.strURLToLoad, this.webvwTitle, this.sellerID);
 
 
   @override
-  RunJSInWebViewState createState() {
-    String fullURL = strURLToLoad + this.sellerID.toString() + RunJSInWebView.url_addons;
+  WebViewScreenState createState() {
+    String fullURL = strURLToLoad + this.sellerID.toString() + WebViewScreen.url_addons;
 
-    return new RunJSInWebViewState(fullURL, this.webvwTitle);
+    return new WebViewScreenState(fullURL, this.webvwTitle);
   }
 }
 
-class RunJSInWebViewState extends State<RunJSInWebView> {
+class WebViewScreenState extends State<WebViewScreen> {
   final flutterWebviewPlugin = new FlutterWebviewPlugin();
   String strURL;
   String appbarTitle;
 
-  RunJSInWebViewState(this.strURL, this.appbarTitle);
+  WebViewScreenState(this.strURL, this.appbarTitle);
 
   @override
   void initState(){
