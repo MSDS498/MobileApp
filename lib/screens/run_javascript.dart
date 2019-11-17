@@ -6,15 +6,24 @@ class WebViewScreen extends StatefulWidget {
   final String strURLToLoad;
   final String webvwTitle;
   final int sellerID;
+  final int addTableauFlags;
 
   static const String url_addons = "?:embed=y&:display_count=no&:toolbar=no&:showVizHome=no&:subscriptions=no&:showAppBanner=false&:showShareOptions=false&:refresh=yes";
 
-  WebViewScreen(this.strURLToLoad, this.webvwTitle, this.sellerID);
+  WebViewScreen(this.strURLToLoad, this.webvwTitle, this.sellerID, [this.addTableauFlags=1]);
+
 
 
   @override
   WebViewScreenState createState() {
-    String fullURL = strURLToLoad + this.sellerID.toString() + WebViewScreen.url_addons;
+    String fullURL;
+
+    if (this.addTableauFlags == 1){
+      fullURL = strURLToLoad + this.sellerID.toString() + WebViewScreen.url_addons;
+    }
+    else {
+      fullURL = this.strURLToLoad;
+    }
 
     return new WebViewScreenState(fullURL, this.webvwTitle);
   }

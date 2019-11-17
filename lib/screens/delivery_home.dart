@@ -28,14 +28,26 @@ class DeliveryHomeScreenState extends State<DeliveryHomeScreen>{
       body: Column(mainAxisAlignment: MainAxisAlignment.center,
                    crossAxisAlignment: CrossAxisAlignment.center,
                    children: <Widget>[
-                                        Center( child: Container( child: RaisedButton.icon ( icon: Icon(Icons.today), label: Text('In-Progress Deliveries'), onPressed: _viewDeliveryTreemap, ), width: 200.0 ), ),
+                                        Center( child: Container( child: RaisedButton.icon ( icon: Icon(Icons.today), label: Text('In-Progress Deliveries'), onPressed: _viewDeliveryStatus, ), width: 200.0 ), ),
                                         Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.dashboard), label: Text('Delivery Treemap'), onPressed: _viewDeliveryTreemap, ), width: 200.0 ), ),
-                                        Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.trending_up), label: Text('Pct Late Trends'), onPressed: _viewDeliveryTreemap, ), width: 200.0 ), ),
+                                        Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.trending_up), label: Text('Pct Late Trends'), onPressed: _viewPctLateTrends, ), width: 200.0 ), ),
                                         Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.gps_fixed), label: Text('Map'), onPressed: _viewDeliveryTreemap, ), width: 200.0 ), ),
                                       ]
                   ),
     );
   }
+
+  _viewDeliveryStatus () {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) =>
+            WebViewScreen(
+                "https://public.tableau.com/views/Olist_Delivery/DeliveryStatusDashboard?SellerID_param=",
+                "In-Progress Deliveries",
+                this.sellerID),
+        )
+    );
+  }
+
 
 
   _viewDeliveryTreemap () {
@@ -47,6 +59,17 @@ class DeliveryHomeScreenState extends State<DeliveryHomeScreen>{
                 this.sellerID),
         )
     );
+  }
+
+  _viewPctLateTrends () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) =>
+            WebViewScreen(
+                "https://public.tableau.com/views/Olist_Delivery/PctLate_ToCust?SellerID_param=",
+                "% Late Delivery to Customer",
+                this.sellerID),
+      )
+  );
   }
 
 }
