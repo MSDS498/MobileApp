@@ -29,9 +29,12 @@ class CSatHomeScreenState extends State<CSatHomeScreen>{
                    crossAxisAlignment: CrossAxisAlignment.center,
                    children: <Widget>[
                                        Center( child: Container( child: RaisedButton.icon ( icon: Icon(Icons.insert_chart), label: Text('Review Scores'), onPressed: _viewReviewScores, ), width: 200.0 ), ),
-                                       Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.trending_up), label: Text('NPS Trends'), onPressed: _viewReviewScores, ), width: 200.0 ), ),
-                                       Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.cloud), label: Text('Key Themes'), onPressed: _viewWordCloud, ), width: 200.0 ), ),
-                                       Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.short_text), label: Text('Customer Verbatims'), onPressed: _viewReviewScores, ), width: 200.0 ), ),
+                                       Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.trending_up), label: Text('NPS Trends'), onPressed: _viewNPSTrends, ), width: 200.0 ), ),
+                                       Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.cloud), label: Text('Key Themes Cloud'), onPressed: _viewWordCloud, ), width: 200.0 ), ),
+                                       Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.list), label: Text('Topic Clustering'), onPressed: _viewTopicCluster, ), width: 200.0 ), ),
+                                       //Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.short_text), label: Text('Customer Verbatims'), onPressed: _viewReviewScores, ), width: 200.0 ), ),
+                                       Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.insert_chart), label: Text('Impact of Delays'), onPressed: _viewImpactOfDelays, ), width: 200.0 ), ),
+                                       Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.dashboard), label: Text('CSat Treemap'), onPressed: _viewCSatTreemap, ), width: 200.0 ), ),
                                      ]
                   ),
     );
@@ -41,8 +44,29 @@ class CSatHomeScreenState extends State<CSatHomeScreen>{
     Navigator.push(context,
         MaterialPageRoute(builder: (context) =>
             WebViewScreen(
-                "https://public.tableau.com/views/Olist_Delivery/DeliveryTreemap?SellerID_param=",
-                "Delivery by customer state",
+                "https://public.tableau.com/views/Olist_Review_Dashbrd/OrdersbyReviewScore?SellerID_param=",
+                "Orders by Review Score",
+                this.sellerID),
+        )
+    );
+  }
+
+  _viewNPSTrends() {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) =>
+            WebViewScreen(
+                "https://public.tableau.com/views/Olist_Review_Dashbrd/TrendsOverTime?SellerID_param=",
+                "NPS, Score Trends",
+                this.sellerID),
+        )
+    );
+  }
+  _viewImpactOfDelays() {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) =>
+            WebViewScreen(
+                "https://public.tableau.com/views/Olist_Review_Dashbrd/ScoresbyDeliveryDelay?SellerID_param=",
+                "Impact of Delayed Delivery",
                 this.sellerID),
         )
     );
@@ -84,6 +108,52 @@ class CSatHomeScreenState extends State<CSatHomeScreen>{
 
     Navigator.push(context,
                    MaterialPageRoute(builder: (context) => WebViewScreen(wordCloudURL, "Word Cloud", this.sellerID, 0), )
+    );
+  }
+
+  _viewTopicCluster() {
+    String topicClusterURL;
+    switch(sellerID) {
+      case 1:
+        topicClusterURL = "https://drive.google.com/open?id=14jCP4EoXGTaH_C1SeuQA2CVpAM-KmNmT"; break;
+      case 2:
+        topicClusterURL = "https://drive.google.com/open?id=19MRWGafjNzGxsDcYN9nTBYJ402EwPiKt"; break;
+      case 3:
+        topicClusterURL = "https://drive.google.com/open?id=1wX4n7U61ELCqoC04do0_C5pxzZwHi0VM"; break;
+      case 4:
+        topicClusterURL = "https://drive.google.com/open?id=19liD-GPj5PJRtKC-rG0HWTXnWz6wJy22"; break;
+      case 5:
+        topicClusterURL = "https://drive.google.com/open?id=1HmQcNhwIpv4UMMPlltRKFHYJ_caETrGS"; break;
+      case 6:
+        topicClusterURL = "https://drive.google.com/open?id=1hhcEOmGUxR46OkeXwVOWfb1qgFkiPJoH"; break;
+      case 7:
+        topicClusterURL = "https://drive.google.com/open?id=1N9C4Hwrnm7tlp_cwNSuvbVIrm9FL9oLM"; break;
+      case 8:
+        topicClusterURL = "https://drive.google.com/open?id=1PbbKDQ67XZsBrlmSagYa8hiBTZXw6Qoe"; break;
+      case 9:
+        topicClusterURL = "https://drive.google.com/open?id=1wTwTDvwFPs8ga_r-RDMfT9d1yLO-k4oa"; break;
+      case 10:
+        topicClusterURL = "https://drive.google.com/open?id=1yNP52zQs7Pqj0lY3uSnsV9G50G_9Zkdn"; break;
+
+      default:
+        topicClusterURL = "https://drive.google.com/open?id=1yNP52zQs7Pqj0lY3uSnsV9G50G_9Zkdn"; break;
+    }
+
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => WebViewScreen(topicClusterURL, "Topic Clusters - top 10", this.sellerID, 0), )
+    );
+  }
+
+
+
+  _viewCSatTreemap() {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) =>
+            WebViewScreen(
+                "https://public.tableau.com/views/Olist_Review_Dashbrd/OrdersbyReviewScore?SellerID_param=",
+                "Orders by Review Score",
+                this.sellerID),
+        )
     );
   }
 
