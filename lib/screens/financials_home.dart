@@ -29,14 +29,26 @@ class FinancialsHomeScreenState extends State<FinancialsHomeScreen>{
     body: Column(mainAxisAlignment: MainAxisAlignment.center,
                  crossAxisAlignment: CrossAxisAlignment.center,
                  children: <Widget>[
-                                      //Center( child: Container( child: RaisedButton.icon ( icon: Icon(Icons.table_chart), label: Text('Sales Table'), onPressed: _viewSalesTreemap, ), width: 200.0 ), ),
+                                      Center( child: Container( child: RaisedButton.icon ( icon: Icon(Icons.list), label: Text('Sales Summary'), onPressed: _viewSalesSummary, ), width: 200.0 ), ),
                                       Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.dashboard), label: Text('Sales Treemap'), onPressed: _viewSalesTreemap, ), width: 200.0 ), ),
                                       Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.trending_up), label: Text('Financial Trends'), onPressed: _viewSalesTrends, ), width: 200.0 ), ),
                                       Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.gps_fixed), label: Text('Map of Orders'), onPressed: _viewSalesMapByState, ), width: 200.0 ), ),
-                                      Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.gps_fixed), label: Text('Map of Orders2'), onPressed: _viewSalesMapByZip, ), width: 200.0 ), ),
-                                      Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.gps_fixed), label: Text('Map of Orders3'), onPressed: _viewSalesMapByOrder, ), width: 200.0 ), ),
+                                      //Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.gps_fixed), label: Text('Map of Orders2'), onPressed: _viewSalesMapByZip, ), width: 200.0 ), ),
+                                      //Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.gps_fixed), label: Text('Map of Orders3'), onPressed: _viewSalesMapByOrder, ), width: 200.0 ), ),
                                    ]
                   ),
+    );
+  }
+
+
+  _viewSalesSummary () {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) =>
+            WebViewScreen(
+                "https://public.tableau.com/views/Olist_Financials_Dashbrd/OrderSummary?SellerID_param=",
+                "Sales Summary",
+                this.sellerID),
+        )
     );
   }
 

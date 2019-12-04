@@ -31,7 +31,7 @@ class DeliveryHomeScreenState extends State<DeliveryHomeScreen>{
                                         Center( child: Container( child: RaisedButton.icon ( icon: Icon(Icons.today), label: Text('In-Progress Deliveries'), onPressed: _viewDeliveryStatus, ), width: 200.0 ), ),
                                         Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.dashboard), label: Text('Delivery Treemap'), onPressed: _viewDeliveryTreemap, ), width: 200.0 ), ),
                                         Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.trending_up), label: Text('Pct Late Trends'), onPressed: _viewPctLateTrends, ), width: 200.0 ), ),
-                                        Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.gps_fixed), label: Text('Map'), onPressed: _viewDeliveryTreemap, ), width: 200.0 ), ),
+                                        //Center( child: Container( child: RaisedButton.icon( icon: Icon(Icons.gps_fixed), label: Text('Map'), onPressed: _viewDeliveryTreemap, ), width: 200.0 ), ),
                                       ]
                   ),
     );

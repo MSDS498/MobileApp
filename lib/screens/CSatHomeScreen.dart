@@ -56,7 +56,7 @@ class CSatHomeScreenState extends State<CSatHomeScreen>{
         MaterialPageRoute(builder: (context) =>
             WebViewScreen(
                 "https://public.tableau.com/views/Olist_Review_Dashbrd/TrendsOverTime?SellerID_param=",
-                "NPS, Score Trends",
+                "NPS, Review Score Trends",
                 this.sellerID),
         )
     );
@@ -150,8 +150,8 @@ class CSatHomeScreenState extends State<CSatHomeScreen>{
     Navigator.push(context,
         MaterialPageRoute(builder: (context) =>
             WebViewScreen(
-                "https://public.tableau.com/views/Olist_Review_Dashbrd/OrdersbyReviewScore?SellerID_param=",
-                "Orders by Review Score",
+                "https://public.tableau.com/views/Olist_Review_Dashbrd/CSatTreemap?SellerID_param=",
+                "Customer Satisfaction Treemap",
                 this.sellerID),
         )
     );
